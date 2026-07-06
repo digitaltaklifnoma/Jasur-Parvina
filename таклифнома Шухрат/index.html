@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+<meta property="og:title" content="Jasur & Parvina | Свадебное приглашение">
+<meta property="og:description" content="С большой радостью приглашаем вас разделить с нами одно из самых счастливых событий в жизни - нашу свадьбу. 16 августа 2026, 19:00.">
+<meta property="og:image" content="photo4.jpeg">
+<meta property="og:type" content="website">
+<title>Jasur & Parvina · 16.08.2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Jost:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:opsz,wght@14..32,300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        background: #f5f0ea;
+        font-family: 'Jost', sans-serif;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        height: 100vh;
+    }
+
+    /* ========== ЗАСТАВКА ========== */
+    .splash {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100vh; height: 100dvh;
+        background-image: url('photo.png');
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        padding-bottom: 10vh;
+        z-index: 200;
+        transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 1.4s;
+        opacity: 1;
+        visibility: visible;
+    }
+    .splash.hide { opacity: 0; visibility: hidden; }
+
+    .btn-container-splash {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        animation: fadeInUp 1.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(28px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .btn-ornament {
+        font-family: 'Playfair Display', serif;
+        font-size: 0.65rem;
+        letter-spacing: 5px;
+        color: rgba(255, 245, 235, 0.7);
+        text-align: center;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .btn-ornament span {
+        display: block;
+        width: 32px;
+        height: 0.5px;
+        background: rgba(255, 245, 235, 0.5);
+    }
+
+    .splash-btn {
+        position: relative;
+        background: rgba(255, 255, 255, 0.48);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 0.5px solid rgba(255, 255, 255, 0.92);
+        border-radius: 60px;
+        padding: 16px 48px;
+        font-family: 'Playfair Display', serif;
+        font-size: 0.85rem;
+        font-weight: 500;
+        letter-spacing: 6px;
+        color: rgba(55, 40, 28, 0.8);
+        cursor: pointer;
+        transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        text-transform: uppercase;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.07), 0 1px 0 rgba(255,255,255,0.9) inset;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        overflow: hidden;
+    }
+    .splash-btn .btn-icon { font-size: 0.65rem; opacity: 0.5; transition: opacity 0.4s, transform 0.4s; }
+    .splash-btn:hover { background: rgba(255,255,255,0.7); border-color: rgba(255,255,255,1); letter-spacing: 7px; padding: 16px 54px; }
+    .splash-btn:hover .btn-icon { opacity: 0.8; transform: scale(1.15); }
+
+    .btn-ornament-bottom {
+        margin-top: 14px;
+        font-size: 0.65rem;
+        letter-spacing: 5px;
+        color: rgba(255, 245, 235, 0.5);
+        text-align: center;
+        font-family: 'Playfair Display', serif;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .btn-ornament-bottom span { display: block; width: 32px; height: 0.5px; background: rgba(255,245,235,0.4); }
+
+    .btn-subtle-splash {
+        text-align: center;
+        margin-top: 13px;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.6rem;
+        letter-spacing: 4px;
+        color: rgba(255, 245, 235, 0.5);
+        text-transform: uppercase;
+    }
+
+    .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(200,175,140,0.5), rgba(200,175,140,0));
+        transform: scale(0);
+        animation: rippleAnim 0.8s ease-out forwards;
+        pointer-events: none;
+    }
+    @keyframes rippleAnim { to { transform: scale(8); opacity: 0; } }
+
+    /* ========== ОСНОВНОЙ КОНТЕНТ ========== */
+    .main-content {
+        opacity: 0;
+        visibility: hidden;
+        overflow-y: auto;
+        height: 100vh;
+        scroll-behavior: smooth;
+        transition: opacity 2.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 2.6s ease;
+    }
+    .main-content.show { opacity: 1; visibility: visible; }
+
+    .page {
+        width: 100%;
+        min-height: 100vh;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* СТРАНИЦА 1 */
+    .page-1 {
+        background-image: url('photo1.jpg');
+        background-size: cover;
+        background-position: center 30%;
+    }
+    .page-1 .overlay {
+        position: absolute; inset: 0;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(0,0,0,0.55));
+        z-index: 1;
+    }
+    .page-1 .content {
+        position: relative; z-index: 2;
+        text-align: center; color: white;
+        width: 100%; padding: 0 1.5rem;
+        opacity: 0; transform: scale(0.99); filter: blur(14px);
+        transition: opacity 3s cubic-bezier(0.16, 1, 0.3, 1), transform 3s cubic-bezier(0.16, 1, 0.3, 1), filter 3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .main-content.show .page-1 .content { opacity: 1; transform: scale(1); filter: blur(0); }
+
+    .premium-text { opacity: 0; transform: translateY(24px); filter: blur(10px); transition: opacity 1.8s cubic-bezier(0.16, 1, 0.3, 1), transform 1.8s cubic-bezier(0.16, 1, 0.3, 1), filter 1.8s cubic-bezier(0.16, 1, 0.3, 1); }
+    .main-content.show .premium-text { opacity: 1; transform: translateY(0); filter: blur(0); }
+    .main-content.show .premium-delay-1 { transition-delay: 0.3s; }
+    .main-content.show .premium-delay-2 { transition-delay: 0.65s; }
+    .main-content.show .premium-delay-3 { transition-delay: 1s; }
+    .main-content.show .premium-delay-4 { transition-delay: 1.35s; }
+    .main-content.show .premium-delay-5 { transition-delay: 1.7s; }
+
+    .wedding-label { font-family: 'Jost', sans-serif; font-size: 13px; letter-spacing: 8px; text-transform: uppercase; font-weight: 400; }
+    .name-main { font-family: 'Great Vibes', 'Cormorant Garamond', serif; font-size: 110px; line-height: 1; font-weight: 400; text-shadow: 0 8px 35px rgba(0,0,0,0.5); }
+    .amp-main { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 500; font-style: italic; margin: 12px 0; }
+    .divider-main { width: 60px; height: 1px; background: rgba(255,255,255,0.5); margin: 30px auto 20px; }
+    .date-main { font-family: 'Jost', sans-serif; font-size: 13px; letter-spacing: 5px; font-weight: 300; }
+
+    /* ========== СТРАНИЦА 2 — НОВЫЙ ДИЗАЙН ========== */
+    .page-2 {
+        background: linear-gradient(160deg, #fdfaf6 0%, #f8f2ea 50%, #f3ebe0 100%);
+        position: relative;
+        overflow: hidden;
+        padding: 6vh 0;
+    }
+
+    /* Декоративные круги на фоне */
+    .page-2::before {
+        content: '';
+        position: absolute;
+        width: 600px; height: 600px;
+        border-radius: 50%;
+        border: 1px solid rgba(200, 175, 140, 0.12);
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+    }
+    .page-2::after {
+        content: '';
+        position: absolute;
+        width: 400px; height: 400px;
+        border-radius: 50%;
+        border: 1px solid rgba(200, 175, 140, 0.18);
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+    }
+
+    .invitation-wrapper {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 560px;
+        width: 92%;
+        text-align: center;
+        padding: 0 1rem;
+    }
+
+    /* Верхний орнамент */
+    .inv-top-line {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 32px;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 1.4s 0.1s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s 0.1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .inv-top-line.visible { opacity: 1; transform: translateY(0); }
+    .inv-top-line .line { flex: 1; height: 0.5px; background: linear-gradient(90deg, transparent, #c9a96e); }
+    .inv-top-line .line.right { background: linear-gradient(90deg, #c9a96e, transparent); }
+    .inv-top-line .diamond {
+        font-size: 0.9rem;
+        color: #c9a96e;
+        letter-spacing: 8px;
+    }
+
+    /* Подзаголовок */
+    .inv-sub {
+        font-family: 'Jost', sans-serif;
+        font-size: 0.65rem;
+        letter-spacing: 7px;
+        text-transform: uppercase;
+        color: #c9a96e;
+        margin-bottom: 28px;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 1.4s 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .inv-sub.visible { opacity: 1; transform: translateY(0); }
+
+    /* Главный текст */
+    .inv-text-block {
+        opacity: 0;
+        transform: translateY(28px);
+        filter: blur(8px);
+        transition: opacity 1.7s 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 1.7s 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 1.7s 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .inv-text-block.visible { opacity: 1; transform: translateY(0); filter: blur(0); }
+
+    .inv-line {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.75rem;
+        font-weight: 400;
+        line-height: 1.65;
+        color: #2c241e;
+        letter-spacing: 0.2px;
+    }
+    .inv-line em {
+        font-style: italic;
+        color: #8b6340;
+        font-weight: 600;
+        position: relative;
+    }
+    /* Подчёркивание у em */
+    .inv-line em::after {
+        content: '';
+        position: absolute;
+        bottom: 1px; left: 0; right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #c9a96e, transparent);
+        opacity: 0.5;
+    }
+
+    /* Разделитель */
+    .inv-divider {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 32px auto;
+        width: 220px;
+        opacity: 0;
+        transform: scaleX(0.7);
+        transition: opacity 1.4s 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .inv-divider.visible { opacity: 1; transform: scaleX(1); }
+    .inv-divider .dline { flex: 1; height: 0.5px; background: #d4bfa8; }
+    .inv-divider .dsym { font-size: 0.65rem; color: #c9a96e; letter-spacing: 6px; }
+
+    /* Дата */
+    .inv-date-block {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 1.6s 1.05s cubic-bezier(0.16, 1, 0.3, 1), transform 1.6s 1.05s cubic-bezier(0.16, 1, 0.3, 1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+    }
+    .inv-date-block.visible { opacity: 1; transform: translateY(0); }
+
+    .inv-date-side {
+        font-family: 'Jost', sans-serif;
+        font-size: 0.85rem;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        color: #7c5d42;
+        font-weight: 600;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #c9a96e;
+    }
+    .inv-date-num {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 4.6rem;
+        font-weight: 700;
+        color: #7c5d42;
+        line-height: 1;
+        letter-spacing: 2px;
+    }
+    .inv-date-label {
+        font-family: 'Jost', sans-serif;
+        font-size: 0.68rem;
+        letter-spacing: 6px;
+        text-transform: uppercase;
+        color: #b69474;
+        margin-top: 8px;
+    }
+    .inv-date-time {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.1rem;
+        font-style: italic;
+        color: #c9a96e;
+        margin-top: 18px;
+        letter-spacing: 1px;
+    }
+
+    /* Дополнительный блок про место и семью */
+    .inv-extra-block {
+        margin-top: 30px;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 1.6s 1.25s cubic-bezier(0.16, 1, 0.3, 1), transform 1.6s 1.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .inv-extra-block.visible { opacity: 1; transform: translateY(0); }
+    .inv-extra-line {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.35rem;
+        color: #2c241e;
+        line-height: 1.7;
+        margin-bottom: 10px;
+    }
+    .inv-extra-line strong {
+        color: #8b6340;
+        font-weight: 700;
+    }
+    .inv-extra-signature {
+        font-family: 'Cormorant Garamond', serif;
+        font-style: italic;
+        font-size: 1.15rem;
+        color: #b69474;
+        margin-top: 16px;
+    }
+
+    /* Нижний орнамент */
+    .inv-bottom-line {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-top: 32px;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 1.4s 1.45s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s 1.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .inv-bottom-line.visible { opacity: 1; transform: translateY(0); }
+    .inv-bottom-line .line { flex: 1; height: 0.5px; background: linear-gradient(90deg, transparent, #c9a96e); }
+    .inv-bottom-line .line.right { background: linear-gradient(90deg, #c9a96e, transparent); }
+    .inv-bottom-line .diamond { font-size: 0.9rem; color: #c9a96e; letter-spacing: 8px; }
+
+    /* СТРАНИЦА 3 */
+    .page-3 { background-image: url('photo2.png'); background-size: cover; background-position: center; }
+    .page-3 .overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,0,0,0.1), rgba(0,0,0,0.3)); z-index: 1; }
+
+    /* СТРАНИЦА 4 - локация */
+    .page-4 { background-image: url('photo3.png'); background-size: cover; background-position: center; }
+    .page-4 .overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,0,0,0.25), rgba(0,0,0,0.5)); z-index: 1; pointer-events: none; }
+
+    .location-card {
+        background: rgba(20, 14, 8, 0.35);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        border-radius: 40px;
+        padding: 32px 28px;
+        text-align: center;
+        max-width: 320px;
+        width: 90%;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        position: relative;
+        z-index: 10;
+        border: 0.5px solid rgba(255, 240, 200, 0.18);
+    }
+    .location-name { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; color: rgba(255, 248, 235, 0.95); letter-spacing: 1px; }
+    .location-addr { font-family: 'Jost', sans-serif; font-size: 0.8rem; color: rgba(255, 240, 210, 0.65); margin: 6px 0; letter-spacing: 2px; }
+    .location-hint { font-family: 'Jost', sans-serif; font-size: 0.65rem; color: rgba(210, 175, 110, 0.7); margin-bottom: 24px; letter-spacing: 2px; }
+
+    .location-btn {
+        background: transparent;
+        color: rgba(255, 252, 245, 0.88);
+        border: none;
+        border-bottom: 0.5px solid rgba(255, 245, 220, 0.55);
+        border-radius: 0;
+        padding: 8px 4px 10px;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 0.85rem;
+        font-weight: 400;
+        letter-spacing: 5px;
+        cursor: pointer;
+        width: auto;
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 20;
+        pointer-events: auto;
+        -webkit-tap-highlight-color: rgba(255,255,255,0.1);
+        touch-action: manipulation;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-transform: uppercase;
+        margin: 0 auto;
+    }
+    .location-btn:hover { color: rgba(255, 252, 245, 1); border-bottom-color: rgba(255, 230, 170, 0.8); letter-spacing: 6px; }
+    .location-btn:active { opacity: 0.7; }
+
+    /* СТРАНИЦА 5 - бегущая строка */
+    .page-5 { background: white; min-height: 14vh; height: 14vh; display: flex; align-items: center; overflow: hidden; border-top: 2px solid #d4bfa8; border-bottom: 2px solid #d4bfa8; }
+    .marquee { white-space: nowrap; animation: scrollText 14s linear infinite; font-family: 'Jost', sans-serif; font-size: 0.9rem; letter-spacing: 6px; color: #8b7355; text-transform: uppercase; }
+    .marquee span { margin: 0 35px; }
+    @keyframes scrollText { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
+
+    /* СТРАНИЦА 6 - таймер */
+    .page-6 { background-image: url('photo4.jpeg'); background-size: cover; background-position: center; justify-content: space-between; }
+    .page-6 .overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(0,0,0,0.7)); z-index: 1; }
+    .timer-wrap { position: relative; z-index: 2; text-align: center; width: 100%; padding: 0 1.5rem; margin: auto; }
+    .timer-date { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 500; color: #f5ede3; margin-bottom: 15px; letter-spacing: 2px; }
+    .timer-label { font-family: 'Jost', sans-serif; font-size: 0.7rem; letter-spacing: 6px; text-transform: uppercase; color: rgba(255,250,240,0.9); margin-bottom: 30px; }
+    .timer-grid { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+    .timer-cell { background: rgba(255,255,245,0.15); backdrop-filter: blur(10px); border-radius: 28px; padding: 20px 16px; min-width: 95px; text-align: center; border: 1px solid rgba(255,245,230,0.4); }
+    .timer-num { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 700; color: #fff5e8; animation: numberGlow 2s infinite; }
+    @keyframes numberGlow { 0%,100% { text-shadow: 0 0 5px rgba(200,170,120,0.3); } 50% { text-shadow: 0 0 20px rgba(200,170,120,0.7); } }
+    .timer-unit { font-family: 'Jost', sans-serif; font-size: 0.6rem; letter-spacing: 3px; color: rgba(255,245,230,0.8); margin-top: 8px; }
+    .creator-text { position: relative; z-index: 2; text-align: center; padding: 20px 0 30px; font-family: 'Jost', monospace; font-size: 0.7rem; color: rgba(255,245,230,0.6); }
+    .creator-text a { color: #e8cfaa; text-decoration: none; }
+
+    /* scroll-reveal общий */
+    .scroll-reveal { opacity: 0; transform: translateY(45px); filter: blur(12px); transition: opacity 1.6s cubic-bezier(0.16, 1, 0.3, 1), transform 1.6s cubic-bezier(0.16, 1, 0.3, 1), filter 1.6s cubic-bezier(0.16, 1, 0.3, 1); position: relative; z-index: 10; }
+    .scroll-reveal.visible { opacity: 1; transform: translateY(0); filter: blur(0); }
+    .reveal-delay-1 { transition-delay: 0.25s; }
+    .reveal-delay-2 { transition-delay: 0.5s; }
+
+    /* МОДАЛЬНОЕ ОКНО */
+    .modal {
+        position: fixed; top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(255,250,240,0.97);
+        backdrop-filter: blur(20px);
+        z-index: 1000;
+        display: flex; justify-content: center; align-items: center;
+        gap: 20px; flex-direction: column;
+        opacity: 0; visibility: hidden;
+        transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .modal.show { opacity: 1; visibility: visible; }
+    .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: #7c5d42; letter-spacing: 2px; margin-bottom: 8px; }
+    .modal-btn {
+        background: #f5efe8; color: #8b6b4a;
+        border: 1px solid #e2d4c8;
+        padding: 14px 32px; border-radius: 60px;
+        text-decoration: none;
+        font-family: 'Jost', sans-serif; font-size: 0.9rem; font-weight: 500;
+        width: 80%; max-width: 260px; text-align: center;
+        transition: all 0.3s;
+        display: block;
+    }
+    .modal-btn:hover { background: #e8ddd0; border-color: #c9b69c; color: #5e4230; }
+    .modal-close { position: absolute; top: 40px; right: 30px; font-size: 24px; color: #8b6b4a; cursor: pointer; background: rgba(200,175,140,0.2); width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: 0.3s; }
+    .modal-close:hover { background: rgba(200,175,140,0.4); }
+
+    /* МУЗЫКА */
+    .music-btn { position: fixed; bottom: 25px; right: 25px; width: 48px; height: 48px; border-radius: 50%; background: rgba(255,250,240,0.85); backdrop-filter: blur(8px); border: 1px solid rgba(180,150,120,0.4); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 1000; }
+    .music-icon { font-size: 1.4rem; color: #8b6b4a; }
+    .music-btn.playing .music-icon { animation: musicPulse 1s infinite; }
+    @keyframes musicPulse { 50% { opacity: 0.6; transform: scale(1.1); } }
+
+    /* СТРЕЛКА */
+    .scroll-hint { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 100; text-align: center; opacity: 0; transition: opacity 0.4s ease; pointer-events: none; cursor: pointer; }
+    .scroll-hint.show { opacity: 1; pointer-events: auto; }
+    .hint-text { font-family: 'Jost', sans-serif; font-size: 0.7rem; letter-spacing: 3px; color: rgba(100,80,60,0.7); text-transform: uppercase; margin-bottom: 6px; }
+    .hint-arrow { width: 22px; height: 22px; border-left: 2px solid rgba(100,80,60,0.6); border-bottom: 2px solid rgba(100,80,60,0.6); transform: rotate(-45deg); margin: 0 auto; animation: hintBounce 1.8s infinite; }
+    @keyframes hintBounce { 0%,100% { transform: rotate(-45deg) translateY(0); } 50% { transform: rotate(-45deg) translateY(6px); } }
+
+    @media (max-width: 550px) {
+        .name-main { font-size: 64px; }
+        .amp-main { font-size: 30px; }
+        .timer-num { font-size: 2rem; }
+        .timer-cell { min-width: 72px; }
+        .splash-btn { padding: 12px 36px; font-size: 0.7rem; letter-spacing: 5px; }
+        .splash { padding-bottom: 12vh; }
+        .inv-line { font-size: 1.35rem; }
+        .inv-date-num { font-size: 3.2rem; }
+        .inv-date-side { font-size: 0.65rem; letter-spacing: 3px; }
+        .inv-extra-line { font-size: 1.1rem; }
+        .invitation-card { padding: 1.8rem 1.2rem; }
+    }
+</style>
+</head>
+<body>
+
+<!-- ЗАСТАВКА -->
+<div class="splash" id="splashScreen">
+    <div class="btn-container-splash">
+        <div class="btn-ornament"><span></span>✦<span></span></div>
+        <button class="splash-btn" id="openInviteBtn">
+            <span class="btn-icon">✦</span>
+            <span>Открыть</span>
+            <span class="btn-icon">✦</span>
+        </button>
+        <div class="btn-ornament-bottom"><span></span>✦<span></span></div>
+        <div class="btn-subtle-splash">прикоснись к моменту</div>
+    </div>
+</div>
+
+<!-- ОСНОВНОЙ КОНТЕНТ -->
+<div class="main-content" id="mainContent">
+
+    <!-- СТРАНИЦА 1 -->
+    <div class="page page-1">
+        <div class="overlay"></div>
+        <div class="content">
+            <div class="premium-text premium-delay-2"><div class="name-main">Jasur</div></div>
+            <div class="premium-text premium-delay-3"><div class="amp-main">&</div></div>
+            <div class="premium-text premium-delay-4"><div class="name-main">Parvina</div></div>
+            <div class="premium-text premium-delay-5">
+                <div class="divider-main"></div>
+                <div class="date-main">16 · 08 · 2026</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- СТРАНИЦА 2 — НОВЫЙ ДИЗАЙН ПРИГЛАШЕНИЯ -->
+    <div class="page page-2">
+        <div class="invitation-wrapper">
+
+            <div class="inv-top-line">
+                <div class="line"></div>
+                <div class="diamond">✦ ✦ ✦</div>
+                <div class="line right"></div>
+            </div>
+
+            <div class="inv-text-block">
+                <div class="inv-line">Приглашаем Вас разделить с нами</div>
+                <div class="inv-line">одно из самых <em>счастливых событий</em></div>
+                <div class="inv-line">в жизни — нашу <em>свадьбу</em>.</div>
+            </div>
+
+            <div class="inv-divider">
+                <div class="dline"></div>
+                <div class="dsym">✦</div>
+                <div class="dline"></div>
+            </div>
+
+            <div class="inv-date-block">
+                <div class="inv-date-side">август</div>
+                <div>
+                    <div class="inv-date-num">16</div>
+                </div>
+                <div class="inv-date-side">2026</div>
+            </div>
+            <div class="inv-date-time">начало в 19:00</div>
+
+            <div class="inv-extra-block">
+                <div class="inv-extra-line">Мы искренне желаем провести</div>
+                <div class="inv-extra-line">этот незабываемый день</div>
+                <div class="inv-extra-line">вместе с Вами!</div>
+                <div class="inv-extra-line" style="margin-top:18px;">Место проведения:</div>
+                <div class="inv-extra-line">ресторан <strong>«Zarhal»</strong></div>
+                <div class="inv-extra-line">Праздничный ужин в 19:00</div>
+                <div class="inv-extra-signature">С уважением, семья Садуллаевых</div>
+            </div>
+
+            <div class="inv-bottom-line">
+                <div class="line"></div>
+                <div class="diamond">✦ ✦ ✦</div>
+                <div class="line right"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- СТРАНИЦА 3 -->
+    <div class="page page-3">
+        <div class="overlay"></div>
+    </div>
+
+    <!-- СТРАНИЦА 4 — ЛОКАЦИЯ -->
+    <div class="page page-4">
+        <div class="overlay"></div>
+        <div class="scroll-reveal">
+            <div class="location-card">
+                <div class="location-name">Ресторан «Zarhal»</div>
+                <div class="location-hint">праздничный ужин в 19:00</div>
+                <button class="location-btn" id="locationBtn"><span style="opacity:0.5;font-size:0.6rem;">✦</span> Проложить маршрут <span style="opacity:0.5;font-size:0.6rem;">✦</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- СТРАНИЦА 5 — БЕГУЩАЯ СТРОКА -->
+    <div class="page page-5">
+        <div class="marquee">
+            <span>✦ WEDDING DAY 16.08.2026 ✦ НАЧАЛО В 19:00 ✦</span>
+            <span>✦ WEDDING DAY 16.08.2026 ✦ НАЧАЛО В 19:00 ✦</span>
+            <span>✦ WEDDING DAY 16.08.2026 ✦ НАЧАЛО В 19:00 ✦</span>
+            <span>✦ WEDDING DAY 16.08.2026 ✦ НАЧАЛО В 19:00 ✦</span>
+        </div>
+    </div>
+
+    <!-- СТРАНИЦА 6 — ТАЙМЕР -->
+    <div class="page page-6">
+        <div class="overlay"></div>
+        <div class="timer-wrap">
+            <div class="scroll-reveal"><div class="timer-date">16 августа 2026 · 19:00</div></div>
+            <div class="scroll-reveal reveal-delay-1"><div class="timer-label">До начала торжества осталось</div></div>
+            <div class="scroll-reveal reveal-delay-2">
+                <div class="timer-grid">
+                    <div class="timer-cell"><div class="timer-num" id="days">00</div><div class="timer-unit">дней</div></div>
+                    <div class="timer-cell"><div class="timer-num" id="hours">00</div><div class="timer-unit">часов</div></div>
+                    <div class="timer-cell"><div class="timer-num" id="minutes">00</div><div class="timer-unit">минут</div></div>
+                    <div class="timer-cell"><div class="timer-num" id="seconds">00</div><div class="timer-unit">секунд</div></div>
+                </div>
+            </div>
+        </div>
+        <div class="creator-text">⚡ created by <a href="https://t.me/Dma12r" target="_blank">@Dma12r</a></div>
+    </div>
+
+    <div class="music-btn" id="musicBtn"><span class="music-icon">♪</span></div>
+</div>
+
+<!-- СТРЕЛКА -->
+<div class="scroll-hint" id="scrollHint">
+    <div class="hint-text">листайте вниз</div>
+    <div class="hint-arrow"></div>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО -->
+<div class="modal" id="mapModal">
+    <div class="modal-close" id="closeModal">✕</div>
+    <div class="modal-title">Выберите карту</div>
+    <a href="https://yandex.uz/maps/-/CTq96YY5" class="modal-btn" target="_blank">🗺 Яндекс Карты</a>
+    <a href="https://maps.app.goo.gl/6fGfEnDJY3L3qdev7" class="modal-btn" target="_blank">📍 Google Maps</a>
+</div>
+
+<script>
+    const MUSIC_URL = 'https://files.catbox.moe/fdczpg.m4a';
+    let audio = new Audio(MUSIC_URL);
+    audio.loop = true;
+    audio.volume = 0.4;
+    let isPlaying = false;
+    const musicBtn = document.getElementById('musicBtn');
+    const splash = document.getElementById('splashScreen');
+    const mainContent = document.getElementById('mainContent');
+    const openInviteBtn = document.getElementById('openInviteBtn');
+
+    function startMusic() {
+        if (audio && !isPlaying) {
+            audio.play().then(() => { isPlaying = true; musicBtn.classList.add('playing'); }).catch(e => {});
+        }
+    }
+    function stopMusic() {
+        if (audio && isPlaying) { audio.pause(); isPlaying = false; musicBtn.classList.remove('playing'); }
+    }
+
+    function createRipple(event, element) {
+        const rect = element.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = `${size}px`;
+        const clientX = event.touches ? event.touches[0].clientX : event.clientX;
+        const clientY = event.touches ? event.touches[0].clientY : event.clientY;
+        ripple.style.left = `${clientX - rect.left - size / 2}px`;
+        ripple.style.top = `${clientY - rect.top - size / 2}px`;
+        element.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 800);
+    }
+
+    openInviteBtn.addEventListener('click', (e) => {
+        createRipple(e, openInviteBtn);
+        startMusic();
+        setTimeout(() => {
+            splash.classList.add('hide');
+            mainContent.classList.add('show');
+            document.body.style.overflowY = 'auto';
+            // Запускаем анимации страницы 2
+            setTimeout(() => triggerPage2Animations(), 900);
+        }, 250);
+    });
+
+    musicBtn.addEventListener('click', (e) => { e.stopPropagation(); isPlaying ? stopMusic() : startMusic(); });
+
+    // ===== АНИМАЦИИ СТРАНИЦЫ 2 =====
+    function triggerPage2Animations() {
+        const page2Els = document.querySelectorAll('.inv-top-line, .inv-sub, .inv-text-block, .inv-divider, .inv-date-block, .inv-extra-block, .inv-bottom-line');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.2 });
+        page2Els.forEach(el => observer.observe(el));
+    }
+
+    // ===== SCROLL REVEAL ОБЩИЙ =====
+    const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+    }, { threshold: 0.15 });
+
+    const mainObserver = new MutationObserver(() => {
+        if (mainContent.classList.contains('show')) {
+            document.querySelectorAll('.scroll-reveal').forEach(el => scrollObserver.observe(el));
+            mainObserver.disconnect();
+        }
+    });
+    mainObserver.observe(mainContent, { attributes: true });
+
+    // ===== СТРЕЛКА =====
+    const pages = document.querySelectorAll('.page');
+    const scrollHint = document.getElementById('scrollHint');
+
+    function updateScrollHint() {
+        if (!mainContent.classList.contains('show')) return;
+        const lastPage = pages[pages.length - 1];
+        const lastPageBottom = lastPage.offsetTop + lastPage.offsetHeight;
+        const scrollPos = mainContent.scrollTop + window.innerHeight;
+        const isAtEnd = scrollPos >= lastPageBottom - 50;
+        scrollHint.classList.toggle('show', !isAtEnd);
+    }
+
+    mainContent.addEventListener('scroll', updateScrollHint);
+    window.addEventListener('resize', updateScrollHint);
+
+    scrollHint.addEventListener('click', () => {
+        const current = mainContent.scrollTop;
+        let nextPage = null;
+        for (let p of pages) {
+            if (p.offsetTop > current + 50) { nextPage = p; break; }
+        }
+        if (nextPage) mainContent.scrollTo({ top: nextPage.offsetTop, behavior: 'smooth' });
+        else mainContent.scrollTo({ top: mainContent.scrollHeight, behavior: 'smooth' });
+    });
+
+    // ===== КНОПКА МАРШРУТ =====
+    const modal = document.getElementById('mapModal');
+    const closeModal = document.getElementById('closeModal');
+
+    document.addEventListener('click', (e) => {
+        const locBtn = e.target.closest('#locationBtn');
+        if (locBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            modal.classList.add('show');
+        }
+    });
+
+    document.addEventListener('touchend', (e) => {
+        const locBtn = e.target.closest('#locationBtn');
+        if (locBtn) {
+            e.preventDefault();
+            modal.classList.add('show');
+        }
+    }, { passive: false });
+
+    closeModal.addEventListener('click', () => modal.classList.remove('show'));
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('show'); });
+
+    // ===== ТАЙМЕР (16 августа 2026, 19:00) =====
+    const target = new Date(2026, 7, 16, 19, 0, 0);
+    function tick() {
+        const diff = target - new Date();
+        if (diff <= 0) { ['days','hours','minutes','seconds'].forEach(id => document.getElementById(id).innerText = '00'); return; }
+        document.getElementById('days').innerText = String(Math.floor(diff / 864e5)).padStart(2,'0');
+        document.getElementById('hours').innerText = String(Math.floor((diff % 864e5) / 36e5)).padStart(2,'0');
+        document.getElementById('minutes').innerText = String(Math.floor((diff % 36e5) / 6e4)).padStart(2,'0');
+        document.getElementById('seconds').innerText = String(Math.floor((diff % 6e4) / 1e3)).padStart(2,'0');
+    }
+    tick();
+    setInterval(tick, 1000);
+</script>
+</body>
+</html>
