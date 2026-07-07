@@ -195,8 +195,9 @@
             margin-bottom: 0.5rem;
         }
         .date-small {
-            font-size: 0.88rem;
-            letter-spacing: 0.3em;
+            font-size: 1.15rem;
+            font-weight: 600;
+            letter-spacing: 0.22em;
             text-transform: uppercase;
             color: #9b6a3f;
             margin-top: 0.5rem;
@@ -337,8 +338,8 @@
         .hero-date-big {
             font-family: 'Jost', sans-serif;
             font-weight: 700;
-            font-size: 2.1rem;
-            letter-spacing: 0.12em;
+            font-size: 3.1rem;
+            letter-spacing: 0.08em;
             color: #6b3d1f;
             text-transform: uppercase;
             margin-bottom: 0.6rem;
@@ -469,6 +470,10 @@
             font-weight: 700;
             font-style: normal;
             color: #6b3d1f;
+        }
+        .uz-date-highlight {
+            font-size: 2.2rem;
+            display: inline-block;
         }
         .uz-signoff {
             font-size: 1.12rem;
@@ -635,7 +640,9 @@
         .watermark a:active { opacity: 0.8; }
 
         @media (max-width: 500px) {
-            .hero-date-big { font-size: 1.6rem; letter-spacing: 0.08em; }
+            .hero-date-big { font-size: 2.2rem; letter-spacing: 0.04em; }
+            .uz-date-highlight { font-size: 1.75rem; }
+            .date-small { font-size: 0.95rem; letter-spacing: 0.16em; }
             .timer-grid { gap: 0.6rem; }
             .timer-cell { min-width: 82px; padding: 1.1rem 0.7rem; border-radius: 28px; }
             .timer-number { font-size: 2.9rem; }
@@ -709,8 +716,8 @@
                     <p class="uz-greeting">Ассалому алайкум<br>Ҳурматли меҳмонимиз!</p>
                     <p class="uz-lead">Сизни азиз фарзандларимиз</p>
                     <p class="uz-names"><span>Жасур</span><span class="ring-icon">💍</span><span>Парвина</span></p>
-                    <p class="uz-body">ларнинг никоҳ тўйлари муносабати билан <strong>2026 йил</strong><br>
-                    <strong>16 август</strong> куни <strong>соат 09:00</strong> да ёзиладиган<br>
+                    <p class="uz-body">ларнинг никоҳ тўйлари муносабати билан <strong class="uz-date-highlight">2026 йил</strong><br>
+                    <strong class="uz-date-highlight">16 август</strong> куни <strong class="uz-date-highlight">соат 09:00</strong> да ёзиладиган<br>
                     &laquo;<strong>Наҳор оши</strong>&raquo; дастурхонимизга<br>
                     таклиф этамиз.</p>
                     <p class="uz-signoff">Ҳурмат ва эҳтиром ила<br><strong>Садуллаевлар</strong> оиласи</p>
