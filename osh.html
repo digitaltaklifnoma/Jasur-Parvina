@@ -512,12 +512,12 @@
         .timer-cell {
             text-align: center;
             background: rgba(255,244,228,0.8);
-            padding: 0.5rem 0.7rem;
+            padding: 0.9rem 1.1rem;
             border-radius: 28px;
-            min-width: 65px;
+            min-width: 92px;
         }
-        .timer-number { font-size: 1.6rem; font-weight: 500; color: #6b3d1f; font-family: 'Jost', monospace; }
-        .timer-label { font-size: 0.55rem; letter-spacing: 0.1em; color: #a9713a; }
+        .timer-number { font-size: 2.6rem; font-weight: 500; color: #6b3d1f; font-family: 'Jost', monospace; }
+        .timer-label { font-size: 0.65rem; letter-spacing: 0.1em; color: #a9713a; }
 
         .venue-photo {
             width: 100%;
@@ -607,9 +607,24 @@
         .music-btn { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #b2703a; display: flex; align-items: center; justify-content: center; }
         .youtube-player { position: fixed; bottom: -100px; left: -100px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 
+        .watermark {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-bottom: 0.5rem;
+        }
+        .watermark a {
+            font-family: 'Jost', sans-serif;
+            font-size: 0.62rem;
+            letter-spacing: 0.12em;
+            color: #b8875a;
+            opacity: 0.55;
+            text-decoration: none;
+        }
+        .watermark a:active { opacity: 0.8; }
+
         @media (max-width: 500px) {
-            .timer-cell { min-width: 60px; }
-            .timer-number { font-size: 1.4rem; }
+            .timer-cell { min-width: 80px; padding: 0.75rem 0.8rem; }
+            .timer-number { font-size: 2.1rem; }
             .invite-card { padding: 1.2rem; }
             .initials-large { font-size: 3rem; }
             .hero-photo { width: 135px; height: 135px; }
@@ -662,11 +677,8 @@
     <div class="full-invitation" id="fullInvitation">
         <div class="invitation-inner">
             <div class="hero-heading">
-                <div class="hero-ornament">❦</div>
                 <div class="hero-names">Jasur <span class="hero-amp">&</span> Parvina</div>
                 <div class="hero-rule"><span></span><span class="hero-rule-dot">✦</span><span></span></div>
-                <div class="hero-date">16 августа 2026 · 09:00</div>
-                <div class="hero-venue">Ресторан «Zarhal» · утренний плов</div>
             </div>
 
             <div class="invite-card">
@@ -738,6 +750,10 @@
                     а союз двух сердец — миром и любовью
                 </div>
                 <div class="star-decoration">✨ 🍚 ✨</div>
+            </div>
+
+            <div class="watermark">
+                <a href="https://t.me/Dma12r" target="_blank">created by @Dma12r</a>
             </div>
 
         </div>
