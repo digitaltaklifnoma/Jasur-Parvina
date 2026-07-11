@@ -788,7 +788,9 @@
     </div>
 
     <audio id="bgAudio" src="https://files.catbox.moe/yo0u78.mp3" loop preload="auto"></audio>
-    <div class="music-controller" id="musicController"><button class="music-btn" id="musicToggleBtn">🔇</button></div>
+    <div class="music-controller" id="musicController">
+        <button class="music-btn" id="musicToggleBtn">🔇</button>
+    </div>
 </div>
 
 <script>
@@ -828,8 +830,10 @@
 
     const bgAudio = document.getElementById('bgAudio');
     const musicToggleBtn = document.getElementById('musicToggleBtn');
+    const musicController = document.getElementById('musicController');
     let musicStarted = false;
 
+    // Функция для запуска музыки
     function startMusic() {
         if (musicStarted) return;
         musicStarted = true;
@@ -837,16 +841,23 @@
         bgAudio.play().then(() => {
             musicToggleBtn.innerHTML = '🔊';
         }).catch(() => {
-            // Autoplay blocked — will start on next user tap via toggle button
             musicStarted = false;
         });
     }
 
-    function toggleMute() {
-        if (!musicStarted) { startMusic(); return; }
+    // Функция для переключения музыки
+    function toggleMusic() {
+        if (!musicStarted) {
+            startMusic();
+            return;
+        }
+        
         if (bgAudio.paused) {
-            bgAudio.play();
-            musicToggleBtn.innerHTML = '🔊';
+            bgAudio.play().then(() => {
+                musicToggleBtn.innerHTML = '🔊';
+            }).catch(() => {
+                musicStarted = false;
+            });
         } else {
             bgAudio.pause();
             musicToggleBtn.innerHTML = '🔇';
@@ -855,17 +866,20 @@
 
     const openingOverlay = document.getElementById('openingOverlay');
     const fullInvitation = document.getElementById('fullInvitation');
-    const closeInvBtn = document.getElementById('closeInvitationBtn');
-    const musicController = document.getElementById('musicController');
     const openBtn = document.getElementById('openBtn');
 
+    // Появление кнопки музыки
     setTimeout(() => { musicController.classList.add('active'); }, 1500);
 
+    // Обработчик открытия приглашения
     let isOpening = false;
     openBtn.addEventListener('click', function(e) {
         if (isOpening) return;
         isOpening = true;
+        
+        // Запускаем музыку при открытии
         startMusic();
+        
         const animClouds = document.querySelectorAll('.anim-cloud');
         const directions = [
             'translateX(-620px) translateY(-280px) scale(2.8)', 'translateX(680px) translateY(300px) scale(2.9)', 'translateX(500px) translateY(-350px) scale(2.7)',
@@ -887,9 +901,16 @@
         }, 2000);
     });
 
-    closeInvBtn.addEventListener('click', () => fullInvitation.classList.remove('open'));
-    musicToggleBtn.addEventListener('click', toggleMute);
+    // Закрытие приглашения
+    const closeInvBtn = document.getElementById('closeInvitationBtn');
+    if (closeInvBtn) {
+        closeInvBtn.addEventListener('click', () => fullInvitation.classList.remove('open'));
+    }
 
+    // Обработчик кнопки музыки
+    musicToggleBtn.addEventListener('click', toggleMusic);
+
+    // Параллакс при скролле
     const inviteScroll = document.getElementById('fullInvitation');
     if (inviteScroll) {
         inviteScroll.addEventListener('scroll', () => {
