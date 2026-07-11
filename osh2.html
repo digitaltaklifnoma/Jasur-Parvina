@@ -788,7 +788,9 @@
     </div>
 
     <audio id="bgAudio" src="https://files.catbox.moe/yo0u78.mp3" loop preload="auto"></audio>
-    <div class="music-controller" id="musicController"><button class="music-btn" id="musicToggleBtn">🔇</button></div>
+    <div class="music-controller" id="musicController">
+        <button class="music-btn" id="musicToggleBtn">🔇</button>
+    </div>
 </div>
 
 <script>
@@ -796,7 +798,7 @@
     if (heroPhoto) heroPhoto.src = "https://i.postimg.cc/h4zpHmx0/osh.png";
 
     // 16 августа 2026, 09:30
-    const targetDate = new Date(2026, 7, 16, 9, 0, 0).getTime();
+    const targetDate = new Date(2026, 7, 16, 9, 30, 0).getTime();
 
     function updateTimer() {
         const now = Date.now();
@@ -828,6 +830,7 @@
 
     const bgAudio = document.getElementById('bgAudio');
     const musicToggleBtn = document.getElementById('musicToggleBtn');
+    const musicController = document.getElementById('musicController');
     let musicStarted = false;
 
     function startMusic() {
@@ -843,10 +846,14 @@
     }
 
     function toggleMute() {
-        if (!musicStarted) { startMusic(); return; }
+        if (!musicStarted) {
+            startMusic();
+            return;
+        }
         if (bgAudio.paused) {
-            bgAudio.play();
-            musicToggleBtn.innerHTML = '🔊';
+            bgAudio.play().then(() => {
+                musicToggleBtn.innerHTML = '🔊';
+            }).catch(() => {});
         } else {
             bgAudio.pause();
             musicToggleBtn.innerHTML = '🔇';
@@ -856,8 +863,20 @@
     const openingOverlay = document.getElementById('openingOverlay');
     const fullInvitation = document.getElementById('fullInvitation');
     const closeInvBtn = document.getElementById('closeInvitationBtn');
-    const musicController = document.getElementById('musicController');
     const openBtn = document.getElementById('openBtn');
+
+    // Ensure close button works
+    if (!document.querySelector('.close-invitation')) {
+        const closeBtn = document.createElement('div');
+        closeBtn.className = 'close-invitation';
+        closeBtn.id = 'closeInvitationBtn';
+        closeBtn.innerHTML = '✕';
+        document.querySelector('.full-invitation').appendChild(closeBtn);
+    }
+    const closeBtn = document.getElementById('closeInvitationBtn');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => fullInvitation.classList.remove('open'));
+    }
 
     setTimeout(() => { musicController.classList.add('active'); }, 1500);
 
@@ -887,7 +906,6 @@
         }, 2000);
     });
 
-    closeInvBtn.addEventListener('click', () => fullInvitation.classList.remove('open'));
     musicToggleBtn.addEventListener('click', toggleMute);
 
     const inviteScroll = document.getElementById('fullInvitation');
