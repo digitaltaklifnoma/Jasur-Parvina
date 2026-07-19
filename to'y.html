@@ -530,6 +530,144 @@
     .hint-arrow { width: 22px; height: 22px; border-left: 2px solid rgba(100,80,60,0.6); border-bottom: 2px solid rgba(100,80,60,0.6); transform: rotate(-45deg); margin: 0 auto; animation: hintBounce 1.8s infinite; }
     @keyframes hintBounce { 0%,100% { transform: rotate(-45deg) translateY(0); } 50% { transform: rotate(-45deg) translateY(6px); } }
 
+    /* ===== СТИЛИ ДЛЯ СТАТИСТИКИ (СКРЫТОЙ) ===== */
+    .stats-page {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 248, 240, 0.97);
+        backdrop-filter: blur(20px);
+        z-index: 9999;
+        overflow-y: auto;
+        padding: 30px 20px;
+    }
+    .stats-page.active {
+        display: block;
+    }
+    .stats-container {
+        max-width: 500px;
+        margin: 0 auto;
+        background: rgba(255, 252, 248, 0.95);
+        border-radius: 40px;
+        padding: 30px 25px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+        border: 0.5px solid rgba(210,150,90,0.2);
+    }
+    .stats-title {
+        font-family: 'Great Vibes', cursive;
+        font-size: 2.8rem;
+        text-align: center;
+        color: #6b3d1f;
+        margin-bottom: 5px;
+    }
+    .stats-subtitle {
+        text-align: center;
+        color: #a9713a;
+        font-size: 0.85rem;
+        letter-spacing: 0.15em;
+        margin-bottom: 25px;
+    }
+    .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin-bottom: 25px;
+    }
+    .stats-card {
+        background: rgba(255, 244, 228, 0.6);
+        border-radius: 24px;
+        padding: 20px 15px;
+        text-align: center;
+        border: 0.5px solid rgba(210,150,90,0.15);
+    }
+    .stats-number {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #6b3d1f;
+        font-family: 'Jost', monospace;
+        line-height: 1.1;
+    }
+    .stats-label {
+        font-size: 0.75rem;
+        letter-spacing: 0.12em;
+        color: #a9713a;
+        margin-top: 5px;
+        text-transform: uppercase;
+    }
+    .stats-detail {
+        background: rgba(255, 244, 228, 0.4);
+        border-radius: 20px;
+        padding: 15px 18px;
+        margin-bottom: 12px;
+        border: 0.5px solid rgba(210,150,90,0.1);
+    }
+    .stats-detail-label {
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        color: #a9713a;
+        text-transform: uppercase;
+    }
+    .stats-detail-value {
+        font-size: 1rem;
+        color: #5a3f2c;
+        margin-top: 3px;
+        font-weight: 400;
+        word-break: break-word;
+    }
+    .stats-close-btn {
+        display: block;
+        width: 100%;
+        padding: 14px;
+        background: rgba(255, 240, 220, 0.9);
+        border: 0.8px solid rgba(210,150,90,0.4);
+        border-radius: 50px;
+        font-family: 'Jost', sans-serif;
+        font-weight: 500;
+        font-size: 0.9rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: #7a4a24;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-top: 10px;
+    }
+    .stats-close-btn:active { transform: scale(0.97); }
+    .stats-reset-btn {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background: rgba(200, 80, 80, 0.08);
+        border: 0.8px solid rgba(200, 80, 80, 0.25);
+        border-radius: 50px;
+        font-family: 'Jost', sans-serif;
+        font-weight: 400;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #a06060;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-top: 8px;
+    }
+    .stats-reset-btn:active { transform: scale(0.97); background: rgba(200, 80, 80, 0.15); }
+
+    /* Секретный индикатор */
+    .secret-indicator {
+        position: fixed;
+        bottom: 80px;
+        left: 20px;
+        z-index: 300;
+        font-size: 0.5rem;
+        color: rgba(155,106,63,0.08);
+        letter-spacing: 0.15em;
+        pointer-events: none;
+        user-select: none;
+        font-family: 'Jost', sans-serif;
+    }
+
     @media (max-width: 550px) {
         .name-main { font-size: 64px; }
         .amp-main { font-size: 30px; }
@@ -691,7 +829,284 @@
     <a href="https://maps.app.goo.gl/sN33sbqibtg3C3ua9" class="modal-btn" target="_blank">📍 Google Maps</a>
 </div>
 
+<!-- ===== СТРАНИЦА СТАТИСТИКИ (СКРЫТАЯ) ===== -->
+<div class="stats-page" id="statsPage">
+    <div class="stats-container">
+        <div class="stats-title">📊 Статистика</div>
+        <div class="stats-subtitle">Приглашение Jasur & Parvina</div>
+        
+        <div class="stats-grid">
+            <div class="stats-card">
+                <div class="stats-number" id="statsViews">0</div>
+                <div class="stats-label">👁️ Просмотров</div>
+            </div>
+            <div class="stats-card">
+                <div class="stats-number" id="statsClicks">0</div>
+                <div class="stats-label">👆 Кликов</div>
+            </div>
+        </div>
+
+        <div class="stats-detail">
+            <div class="stats-detail-label">🕒 Последний визит</div>
+            <div class="stats-detail-value" id="statsLastVisit">—</div>
+        </div>
+        
+        <div class="stats-detail">
+            <div class="stats-detail-label">📱 Устройство</div>
+            <div class="stats-detail-value" id="statsDevice">—</div>
+        </div>
+        
+        <div class="stats-detail">
+            <div class="stats-detail-label">💻 ОС</div>
+            <div class="stats-detail-value" id="statsOS">—</div>
+        </div>
+        
+        <div class="stats-detail">
+            <div class="stats-detail-label">🌐 Браузер</div>
+            <div class="stats-detail-value" id="statsBrowser">—</div>
+        </div>
+
+        <div class="stats-detail">
+            <div class="stats-detail-label">📐 Экран</div>
+            <div class="stats-detail-value" id="statsScreen">—</div>
+        </div>
+
+        <button class="stats-close-btn" id="statsCloseBtn">✕ Закрыть статистику</button>
+        <button class="stats-reset-btn" id="statsResetBtn">🔄 Сбросить статистику</button>
+    </div>
+</div>
+
+<!-- ===== СЕКРЕТНЫЙ ИНДИКАТОР ===== -->
+<div class="secret-indicator">⌨️ Ctrl + клик ×3</div>
+
 <script>
+    // ============================================================
+    // ===== СИСТЕМА СТАТИСТИКИ (СКРЫТАЯ ОТ ГОСТЕЙ) ==============
+    // ============================================================
+    const STATS_KEY = 'wedding_invite_stats_v5';
+
+    function getStats() {
+        try {
+            const data = localStorage.getItem(STATS_KEY);
+            if (data) {
+                return JSON.parse(data);
+            }
+        } catch (e) {}
+        return {
+            views: 0,
+            clicks: 0,
+            lastVisit: null,
+            device: null,
+            os: null,
+            browser: null,
+            screen: null,
+            firstVisit: null
+        };
+    }
+
+    function saveStats(stats) {
+        localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+    }
+
+    function getBrowserInfo() {
+        const ua = navigator.userAgent;
+        let browser = 'Неизвестно';
+        if (ua.indexOf('Chrome') > -1 && ua.indexOf('Edg') === -1 && ua.indexOf('OPR') === -1) browser = 'Google Chrome';
+        else if (ua.indexOf('Safari') > -1 && ua.indexOf('Chrome') === -1 && ua.indexOf('OPR') === -1) browser = 'Safari';
+        else if (ua.indexOf('Firefox') > -1) browser = 'Firefox';
+        else if (ua.indexOf('Edg') > -1) browser = 'Microsoft Edge';
+        else if (ua.indexOf('Opera') > -1 || ua.indexOf('OPR') > -1) browser = 'Opera';
+        else if (ua.indexOf('YaBrowser') > -1) browser = 'Яндекс Браузер';
+        else if (ua.indexOf('Samsung') > -1) browser = 'Samsung Internet';
+        else if (ua.indexOf('UCBrowser') > -1) browser = 'UC Browser';
+        return browser;
+    }
+
+    function getOS() {
+        const ua = navigator.userAgent;
+        if (ua.indexOf('Windows') > -1) return 'Windows';
+        if (ua.indexOf('Mac OS') > -1) return 'macOS';
+        if (ua.indexOf('Android') > -1) return 'Android';
+        if (ua.indexOf('iOS') > -1 || ua.indexOf('iPhone') > -1 || ua.indexOf('iPad') > -1) return 'iOS';
+        if (ua.indexOf('Linux') > -1) return 'Linux';
+        return 'Неизвестно';
+    }
+
+    function getDeviceType() {
+        const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        if (isMobile) {
+            if (/iPad|Tablet/i.test(navigator.userAgent)) return '📱 Планшет';
+            return '📱 Телефон';
+        }
+        return '💻 Компьютер';
+    }
+
+    function getScreenInfo() {
+        return `${window.screen.width}×${window.screen.height}`;
+    }
+
+    function recordView() {
+        const stats = getStats();
+        stats.views = (stats.views || 0) + 1;
+        stats.lastVisit = Date.now();
+        stats.device = getDeviceType();
+        stats.browser = getBrowserInfo();
+        stats.os = getOS();
+        stats.screen = getScreenInfo();
+        
+        if (!stats.firstVisit) {
+            stats.firstVisit = Date.now();
+        }
+        
+        saveStats(stats);
+    }
+
+    function recordClick() {
+        const stats = getStats();
+        stats.clicks = (stats.clicks || 0) + 1;
+        stats.lastVisit = Date.now();
+        saveStats(stats);
+    }
+
+    function updateStatsDisplay() {
+        const stats = getStats();
+        document.getElementById('statsViews').textContent = stats.views || 0;
+        document.getElementById('statsClicks').textContent = stats.clicks || 0;
+        
+        if (stats.lastVisit) {
+            const date = new Date(stats.lastVisit);
+            document.getElementById('statsLastVisit').textContent = date.toLocaleString('ru-RU');
+        } else {
+            document.getElementById('statsLastVisit').textContent = '—';
+        }
+        
+        document.getElementById('statsDevice').textContent = stats.device || '—';
+        document.getElementById('statsOS').textContent = stats.os || '—';
+        document.getElementById('statsBrowser').textContent = stats.browser || '—';
+        document.getElementById('statsScreen').textContent = stats.screen || '—';
+    }
+
+    // ============================================================
+    // ===== СЕКРЕТНАЯ КОМБИНАЦИЯ: CTRL + КЛИК 3 РАЗА ============
+    // ============================================================
+    let ctrlClickCount = 0;
+    let ctrlClickTimer = null;
+    let isCtrlPressed = false;
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Control' || e.key === 'Meta') {
+            isCtrlPressed = true;
+        }
+    });
+
+    document.addEventListener('keyup', function(e) {
+        if (e.key === 'Control' || e.key === 'Meta') {
+            isCtrlPressed = false;
+            ctrlClickCount = 0;
+            clearTimeout(ctrlClickTimer);
+        }
+    });
+
+    document.addEventListener('click', function(e) {
+        if (isCtrlPressed || e.ctrlKey || e.metaKey) {
+            // Игнорируем клики по кнопкам и ссылкам
+            const target = e.target;
+            if (target.closest('button') || target.closest('a')) {
+                return;
+            }
+            
+            ctrlClickCount++;
+            
+            // Визуальная обратная связь
+            document.body.style.transition = 'background 0.1s';
+            document.body.style.background = 'rgba(255, 215, 150, 0.3)';
+            setTimeout(() => {
+                document.body.style.background = '';
+            }, 150);
+            
+            if (ctrlClickCount >= 3) {
+                ctrlClickCount = 0;
+                clearTimeout(ctrlClickTimer);
+                
+                document.getElementById('statsPage').classList.add('active');
+                updateStatsDisplay();
+                document.body.style.overflow = 'hidden';
+                
+                if (navigator.vibrate) navigator.vibrate(30);
+                
+                // Звуковой сигнал
+                try {
+                    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.frequency.value = 800;
+                    osc.type = 'sine';
+                    gain.gain.value = 0.15;
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.15);
+                } catch(e) {}
+            }
+            
+            clearTimeout(ctrlClickTimer);
+            ctrlClickTimer = setTimeout(() => {
+                ctrlClickCount = 0;
+            }, 2000);
+        }
+    });
+
+    // ============================================================
+    // ===== ЗАКРЫТИЕ СТАТИСТИКИ ==================================
+    // ============================================================
+    document.getElementById('statsCloseBtn').addEventListener('click', function() {
+        document.getElementById('statsPage').classList.remove('active');
+        document.body.style.overflow = '';
+    });
+
+    document.getElementById('statsPage').addEventListener('click', function(e) {
+        if (e.target === this) {
+            this.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            document.getElementById('statsPage').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+
+    // ============================================================
+    // ===== СБРОС СТАТИСТИКИ =====================================
+    // ============================================================
+    document.getElementById('statsResetBtn').addEventListener('click', function() {
+        if (confirm('⚠️ Вы уверены, что хотите сбросить ВСЮ статистику?')) {
+            localStorage.removeItem(STATS_KEY);
+            updateStatsDisplay();
+        }
+    });
+
+    // ============================================================
+    // ===== ЗАПИСЬ ПРОСМОТРА ПРИ ЗАГРУЗКЕ =======================
+    // ============================================================
+    recordView();
+
+    // ============================================================
+    // ===== ЗАПИСЬ КЛИКА ПО КНОПКЕ "ОТКРЫТЬ" ====================
+    // ============================================================
+    const openInviteBtn = document.getElementById('openInviteBtn');
+    if (openInviteBtn) {
+        openInviteBtn.addEventListener('click', function() {
+            recordClick();
+        });
+    }
+
+    // ============================================================
+    // ===== ОСТАЛЬНЫЕ СКРИПТЫ ====================================
+    // ============================================================
+
     const MUSIC_URL = 'https://files.catbox.moe/fdczpg.m4a';
     let audio = new Audio(MUSIC_URL);
     audio.loop = true;
@@ -700,7 +1115,6 @@
     const musicBtn = document.getElementById('musicBtn');
     const splash = document.getElementById('splashScreen');
     const mainContent = document.getElementById('mainContent');
-    const openInviteBtn = document.getElementById('openInviteBtn');
 
     function startMusic() {
         if (audio && !isPlaying) {
@@ -732,7 +1146,6 @@
             splash.classList.add('hide');
             mainContent.classList.add('show');
             document.body.style.overflowY = 'auto';
-            // Запускаем анимации страницы 2
             setTimeout(() => triggerPage2Animations(), 900);
         }, 250);
     });
@@ -829,6 +1242,10 @@
     }
     tick();
     setInterval(tick, 1000);
+
+    // ===== ЛОГ В КОНСОЛЬ (ТОЛЬКО ДЛЯ ВАС) =====
+    console.log('🔐 Секретная комбинация: Ctrl + клик 3 раза');
+    console.log('📊 Текущая статистика:', getStats());
 </script>
 </body>
 </html>
